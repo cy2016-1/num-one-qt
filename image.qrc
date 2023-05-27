@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>Resources/image/Cabot.ico</file>
+    </qresource>
+</RCC>
