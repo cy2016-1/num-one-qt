@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include "MainGui.h"
+#include "SingleDataDisplay.h"
 #include "MPU6050Display.h"
-
 
 class QtNumOne : public QMainWindow
 {

@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts websockets
 
 CONFIG += c++17
 
@@ -10,13 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     MPU6050Display.cpp \
+    MyCube.cpp \
+    SingleDataDisplay.cpp \
+    WeSocketClient.cpp \
     main.cpp \
     QtNumOne.cpp
 
 HEADERS += \
     MPU6050Display.h \
     MainGUi.h \
-    QtNumOne.h
+    MyCube.h \
+    QtNumOne.h \
+    SingleDataDisplay.h \
+    WeSocketClient.h
 
 FORMS += \
     QtNumOne.ui

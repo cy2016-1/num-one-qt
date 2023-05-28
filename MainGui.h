@@ -15,7 +15,7 @@ public:
     QMenu *BasicModuleMenu;
 
     //基础模块菜单下的Action
-    QAction *MUP6050_Display_Act;
+    QAction *SingleData_Aisplay_Act, *MUP6050_Display_Act;
 
     MainGUi(QMainWindow *MainWindow)
     {
@@ -32,7 +32,10 @@ public:
         aMenuBar->addMenu(BasicModuleMenu);
 
         //基础模块菜单栏下的Actions
-        MUP6050_Display_Act = new QAction("01_MPU6050数据显示");
+        SingleData_Aisplay_Act= new QAction("01_wesocket单数据收发");
+        BasicModuleMenu->addAction(SingleData_Aisplay_Act);
+
+        MUP6050_Display_Act = new QAction("02_MPU6050数据显示");
         BasicModuleMenu->addAction(MUP6050_Display_Act);
     }
 };

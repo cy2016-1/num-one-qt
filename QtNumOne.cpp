@@ -9,6 +9,13 @@ QtNumOne::QtNumOne(QWidget *parent)
 
 void QtNumOne::LinkSignalSlot()
 {
+    connect(aMainGui->SingleData_Aisplay_Act, &QAction::triggered, this, [=]()
+    {
+        if(CurrentWgt!=nullptr)
+            delete CurrentWgt;
+        CurrentWgt = new SingleDataDisplay(this);
+        this->setCentralWidget(CurrentWgt);
+    });
     connect(aMainGui->MUP6050_Display_Act, &QAction::triggered, this, [=]()
     {
         if(CurrentWgt!=nullptr)
