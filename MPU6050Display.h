@@ -8,8 +8,12 @@
 #include <QLineSeries>
 #include <QChartView>
 #include <QValueAxis>
+#include <QLabel>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QList>
 
-#include <deque>
+#include "WeSocketClient.h"
 
 #include "MyCube.h"
 
@@ -20,9 +24,22 @@ class MPU6050Display: public QWidget
 {
     Q_OBJECT
 public:
-    QGridLayout * TotalLayout;
-    QGroupBox * Datas3DGBox;
-    QVBoxLayout * Data3DVBLyt;
+    WeSocketClient * aWebSocketClient;
+
+    QHBoxLayout * TotalLayout, * open_close_Btn_HBlyt, * SendDataHBlyt;
+    QGroupBox * Datas3DGBox, * OperateGBox;
+    QVBoxLayout * Data3DVBLyt, * DataOpsVBLyt, * DatasShowVBLyt;
+
+    QLabel * YawValueLabel, *PitchValueLabel, *RollValueLabel, *GyroXValueLabel, *GyroYValueLabel, *GyroZValueLabel;
+
+    QLabel * AccXValueLabel, *AccYValueLabel, *AccZalueLabel;
+    QLabel * connectedStateLabel;
+    QPushButton  * OpenWebSocketBtn, * CloseWebSocketBtn, *SendMsgBtn, *SaveDatasBtn;
+    QLineEdit *SendMessageLedit;
+    QFile SaveDatasFile;
+    QTextStream SaveDatasStream;
+    bool DatasSaveFlag = false;
+    QList<float> DatasList;
 
     MyCube * aCube;
 
@@ -30,6 +47,13 @@ public:
     ~MPU6050Display();
     void CreateGui();
     void LinkSignalSlot();
+private slots:
+   void update3D(const QString &message);
+   void updateConnState(bool state);
+   void openws();
+   void closews();
+   void sendmsg();
+   void savedatas();
 };
 
 #endif // MPU6050DISPLAY_H

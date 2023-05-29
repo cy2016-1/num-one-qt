@@ -39,6 +39,7 @@ MyCube::MyCube(QWidget *parent)
   {3,7,4,0} };
 
   setFocusPolicy(Qt::ClickFocus); //Widget默认没有焦点
+  changeRotateByRPY(0,0,0);
 }
 
 void MyCube::paintEvent(QPaintEvent *event)
@@ -56,7 +57,7 @@ void MyCube::paintEvent(QPaintEvent *event)
   //（此外，Qt是屏幕坐标系，原点在左上角）
 
   //矩形边框参考大小
-  const int cube_width=(width()>height()?height():width())/4;
+  const int cube_width=(width()>height()?height():width())/4; //背景框长宽较小值的1/4
 
   //投影矩阵
   //（奇怪，为什么只是平移了z轴，没用perspective函数就有远小近大的效果，
@@ -169,34 +170,7 @@ void MyCube::paintEvent(QPaintEvent *event)
   }
   painter.restore();
 
-  painter.drawText(20,30,"Drag Moving");
-}
-
-void MyCube::mousePressEvent(QMouseEvent *event)
-{
-  mousePressed=true;
-  mousePos=event->pos();
-  QWidget::mousePressEvent(event);
-}
-
-void MyCube::mouseMoveEvent(QMouseEvent *event)
-{
-  if(mousePressed){
-    const QPoint posOffset=event->pos()-mousePos;
-    mousePos=event->pos();
-    //旋转矩阵 x和y分量
-    //rotateMat.rotate(posOffset.x(),QVector3D(0.0f,-0.5f,0.0f));
-    //rotateMat.rotate(posOffset.y(),QVector3D(0.5f,0.0f,0.0f));
-    rotateMat.rotate(1.1f,QVector3D(0.5f*posOffset.y(),-0.5f*posOffset.x(),0.0f));
-    update();
-  }
-  QWidget::mouseMoveEvent(event);
-}
-
-void MyCube::mouseReleaseEvent(QMouseEvent *event)
-{
-  mousePressed=false;
-  QWidget::mouseReleaseEvent(event);
+  painter.drawText(20,30,"MPU6050姿态显示");
 }
 
 QPointF MyCube::getPoint(const QVector3D &vt,int w) const
@@ -205,4 +179,15 @@ QPointF MyCube::getPoint(const QVector3D &vt,int w) const
   //const float z_offset=vt.z()*0.1;
   //return QPointF{ vt.x()*w*(1+z_offset), vt.y()*w*(1+z_offset) };
   return QPointF{ vt.x()*w, vt.y()*w };
+}
+
+void MyCube::changeRotateByRPY(float roll,float pitch, float yaw)
+{
+
+    rotateMat.setToIdentity();//单位化，就不会重复转动
+    //原坐标系定义是按照屏幕坐标系，x朝右，y朝下，z垂直屏幕指向人
+    rotateMat.rotate(yaw,QVector3D(0.0f,0.0f,1.0f));//绕x轴变换
+    rotateMat.rotate(-pitch,QVector3D(1.0f,0.0f,0.0f));//绕y轴变换
+    rotateMat.rotate(roll,QVector3D(0.0f,1.0f,0.0f));//绕x轴变换
+    update();
 }
