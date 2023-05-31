@@ -34,11 +34,11 @@ public:
 
     QLabel * AccXValueLabel, *AccYValueLabel, *AccZalueLabel;
     QLabel * connectedStateLabel;
-    QPushButton  * OpenWebSocketBtn, * CloseWebSocketBtn, *SendMsgBtn, *SaveDatasBtn;
+    QPushButton *CtrlIfDisplayBtn, * OpenWebSocketBtn, * CloseWebSocketBtn, *SendMsgBtn, *SaveDatasBtn;
     QLineEdit *SendMessageLedit;
     QFile SaveDatasFile;
     QTextStream SaveDatasStream;
-    bool DatasSaveFlag = false;
+    bool CtrDrawDatasFlag = true, DatasSaveFlag = false;
     QList<float> DatasList;
 
     MyCube * aCube;
@@ -48,6 +48,7 @@ public:
     void CreateGui();
     void LinkSignalSlot();
 private slots:
+   void CtrlDrawDatas();
    void update3D(const QString &message);
    void updateConnState(bool state);
    void openws();

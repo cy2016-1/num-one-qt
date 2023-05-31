@@ -16,7 +16,6 @@ void SingleDataDisplay::CreateGui()
     //创建并设置总布局
     TotalLayout = new QHBoxLayout();
 
-
     DataCurveGBox = new QGroupBox();
     DataCurveGBox->setTitle("数据曲线");
     TotalLayout->addWidget(DataCurveGBox);
@@ -33,6 +32,9 @@ void SingleDataDisplay::CreateGui()
     connectedStateLabel->setAlignment(Qt::AlignHCenter);
     DataOpsVBLyt->addWidget(connectedStateLabel);
 
+    CtrlIfDisplayBtn = new QPushButton("关闭图形绘制");
+    CtrlIfDisplayBtn->setToolTip("关闭图形绘制的情况下，NumOne可缩短发送数据的时间间隔");
+    DataOpsVBLyt->addWidget(CtrlIfDisplayBtn);
 
     open_close_Btn_HBlyt = new QHBoxLayout();
     DataOpsVBLyt->addLayout(open_close_Btn_HBlyt);
@@ -97,32 +99,50 @@ void SingleDataDisplay::LinkSignalSlot()
 {
     connect(aWebSocketClient, &WeSocketClient::SendReceiveMsg, this, &SingleDataDisplay::updateCurveDatas);
     connect(aWebSocketClient, &WeSocketClient::SendConnectedState, this, &SingleDataDisplay::updateConnState);
+    connect(CtrlIfDisplayBtn, &QPushButton::clicked, this, &SingleDataDisplay::CtrlDrawDatas);
     connect(OpenWebSocketBtn, &QPushButton::clicked, this, &SingleDataDisplay::openws);
     connect(CloseWebSocketBtn, &QPushButton::clicked, this, &SingleDataDisplay::closews);
     connect(SendMsgBtn, &QPushButton::clicked, this, &SingleDataDisplay::sendmsg);
     connect(SaveDatasBtn, &QPushButton::clicked, this, &SingleDataDisplay::savedatas);
 }
 
+void SingleDataDisplay::CtrlDrawDatas()
+{
+     if(CtrDrawDatasFlag)
+     {
+        CtrDrawDatasFlag = false;
+        CtrlIfDisplayBtn ->setText("开启图形绘制");
+     }
+     else
+     {
+         CtrDrawDatasFlag = true;
+         CtrlIfDisplayBtn ->setText("关闭图形绘制");
+     }
+}
+
 void SingleDataDisplay::updateCurveDatas(const QString &message)
 {
     //更新曲线数据
     float getData = message.toFloat();
-    DataDeques.push_back(getData);
-    DataDeques.pop_front();
-    DatasLineSeries->clear();
-    //自动轴范围
-    if(y_max_value<getData)
-        y_max_value = getData;
-    if(getData<y_min_value)
-        y_min_value = getData;
-    aChartView->chart()->axisY()->setRange(y_min_value, y_max_value);
-
-    for (int iNum = 0; iNum < SeriesDataNum; iNum++)
+    if(CtrDrawDatasFlag)
     {
-        DatasLineSeries->append(iNum, DataDeques.at(iNum));
+        DataDeques.push_back(getData);
+        DataDeques.pop_front();
+        DatasLineSeries->clear();
+        //自动轴范围
+        if(y_max_value<getData)
+            y_max_value = getData;
+        if(getData<y_min_value)
+            y_min_value = getData;
+        aChartView->chart()->axisY()->setRange(y_min_value, y_max_value);
+
+        for (int iNum = 0; iNum < SeriesDataNum; iNum++)
+        {
+            DatasLineSeries->append(iNum, DataDeques.at(iNum));
+        }
+        aChartView->chart()->removeSeries(DatasLineSeries);
+        aChartView->chart()->addSeries(DatasLineSeries);
     }
-    aChartView->chart()->removeSeries(DatasLineSeries);
-    aChartView->chart()->addSeries(DatasLineSeries);
     //保存数据
     if(DatasSaveFlag)
     {

@@ -31,11 +31,11 @@ public:
     QGroupBox * DataCurveGBox, * OperateGBox;
     QVBoxLayout * DataCurveVBLyt, * DataOpsVBLyt;
     QLabel * connectedStateLabel;
-    QPushButton  * OpenWebSocketBtn, * CloseWebSocketBtn, *SendMsgBtn, *SaveDatasBtn;
+    QPushButton *CtrlIfDisplayBtn, * OpenWebSocketBtn, * CloseWebSocketBtn, *SendMsgBtn, *SaveDatasBtn;
     QLineEdit *SendMessageLedit;
     QFile SaveDatasFile;
     QTextStream SaveDatasStream;
-    bool DatasSaveFlag = false;
+    bool CtrDrawDatasFlag = true,  DatasSaveFlag = false;
 
     deque<float>  DataDeques;
     QLineSeries * DatasLineSeries;
@@ -49,6 +49,7 @@ public:
     void CreateGui();
     void LinkSignalSlot();
  private slots:
+    void CtrlDrawDatas();
     void updateCurveDatas(const QString &message);
     void updateConnState(bool state);
     void openws();
