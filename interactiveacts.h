@@ -12,6 +12,7 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QLineEdit>
 #include <QDebug>
 #include "WeSocketClient.h"
 
@@ -32,12 +33,12 @@ public:
 
 private:
     QLabel * OpInstruction = nullptr;
-    QHBoxLayout * TotalLayout, * open_close_Btn_HBlyt;
+    QHBoxLayout * TotalLayout, * open_close_Btn_HBlyt, * Paras_PFV_HBlyt;
     QGroupBox * OpInstructionGBox, * OperateGBox;
     QVBoxLayout * IstructionVBLyt, * DatasShowVBLyt, * DataOpsVBLyt;
 
-
-    QLabel * ReciStrLabel,* connectedStateLabel;
+    QLabel * ReciStrLabel,* connectedStateLabel, * Paras_PFV_Label;
+    QLineEdit * Paras_PFV_LE;
 
     QPushButton * OpenWebSocketBtn, * CloseWebSocketBtn;
 

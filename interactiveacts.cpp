@@ -6,7 +6,7 @@ bool GloablKeyListen = false;
 
 //MPU6050：Roll移动上下示教，Yaw移动左右示教，pitch左右移动-转为鼠标控制；鼠标：左键射击、中键前进，右键后退，
 //1键左移，2键右移，3键蹲下，4键跳起
-enum ClickStyle {LS, MS, RS, B1S, B2S, B3S, B4S};
+enum ClickStyle {LS};
 
 LRESULT CALLBACK KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam);
 
@@ -69,6 +69,12 @@ void InteractiveActs::CreateGui()
     CloseWebSocketBtn = new QPushButton("关闭websocket");
     open_close_Btn_HBlyt->addWidget(CloseWebSocketBtn);
 
+    Paras_PFV_HBlyt = new QHBoxLayout();
+    DataOpsVBLyt->addLayout(Paras_PFV_HBlyt);
+    Paras_PFV_Label = new QLabel("视角移动比例：");
+    DataOpsVBLyt->addWidget(Paras_PFV_Label);
+    Paras_PFV_LE = new QLineEdit("2000");
+    DataOpsVBLyt->addWidget(Paras_PFV_LE);
 
 
     DataOpsVBLyt->addStretch(0);
@@ -102,11 +108,7 @@ void InteractiveActs::closews()
 void InteractiveActs::RevMsg(const QString &message)
 {
         QStringList strs_list = message.split(",");
-        if(strs_list.size() == 9)
-        {
-           //显示数据
-           ReciStrLabel->setText("接收数据: "+message);
-        }
+        ReciStrLabel->setText("接收数据: "+message);
         if(GloablKeyListen)
         {
             //根据MPU6050的数据控制光标或键盘动作
@@ -114,7 +116,8 @@ void InteractiveActs::RevMsg(const QString &message)
             float Roll = strs_list[1].toFloat();
             float attack = strs_list[2].toFloat();
             //枪口准芯视角移动
-            MoveDeltaPos(12*(Roll-last_roll),12*(Yaw-last_yaw));
+            qDebug()<<Paras_PFV_LE->text().toInt()<<endl;
+            MoveDeltaPos(Paras_PFV_LE->text().toInt()*(tan(Roll/180*3.141592653)-tan(last_roll/180*3.141592653)),Paras_PFV_LE->text().toInt()*(tan(Yaw/180*3.141592653)-tan(last_yaw/180*3.141592653)));
             last_roll = Roll;
             last_yaw = Yaw;
 
@@ -169,7 +172,7 @@ LRESULT KeyboardHookProc(int nCode, WPARAM wParam, LPARAM lParam)
         {
             if (Key_Info->vkCode <= 254 && Key_Info->vkCode >= 65)
             {
-                //qDebug() << Key_Info->vkCode;
+                qDebug() << Key_Info->vkCode;
                 if(Key_Info->vkCode==80)//按下P开启
                 {
                     GloablKeyListen = true;
