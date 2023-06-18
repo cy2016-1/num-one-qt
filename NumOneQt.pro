@@ -13,6 +13,7 @@ SOURCES += \
     MyCube.cpp \
     SingleDataDisplay.cpp \
     WeSocketClient.cpp \
+    interactiveacts.cpp \
     main.cpp \
     QtNumOne.cpp
 
@@ -22,7 +23,8 @@ HEADERS += \
     MyCube.h \
     QtNumOne.h \
     SingleDataDisplay.h \
-    WeSocketClient.h
+    WeSocketClient.h \
+    interactiveacts.h
 
 FORMS += \
     QtNumOne.ui

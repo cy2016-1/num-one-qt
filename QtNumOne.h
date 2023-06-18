@@ -5,6 +5,7 @@
 #include "MainGui.h"
 #include "SingleDataDisplay.h"
 #include "MPU6050Display.h"
+#include "interactiveacts.h"
 
 class QtNumOne : public QMainWindow
 {
@@ -13,6 +14,7 @@ class QtNumOne : public QMainWindow
 public:
     MainGUi * aMainGui;
     QWidget * CurrentWgt = nullptr;
+    InteractiveActs * InteractiveWgt = nullptr;
 
     QtNumOne(QWidget *parent = nullptr);
     void LinkSignalSlot();

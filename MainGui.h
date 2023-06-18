@@ -15,7 +15,7 @@ public:
     QMenu *BasicModuleMenu;
 
     //基础模块菜单下的Action
-    QAction *SingleData_Aisplay_Act, *MUP6050_Display_Act;
+    QAction *SingleData_Aisplay_Act, *MUP6050_Display_Act, * MUP6050_Interaction_Act;
 
     MainGUi(QMainWindow *MainWindow)
     {
@@ -37,6 +37,10 @@ public:
 
         MUP6050_Display_Act = new QAction("02_MPU6050数据显示");
         BasicModuleMenu->addAction(MUP6050_Display_Act);
+
+        MUP6050_Interaction_Act = new QAction("03_MPU6050交互控制CS1.6");
+        BasicModuleMenu->addAction(MUP6050_Interaction_Act);
+
     }
 };
 
