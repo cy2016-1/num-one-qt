@@ -154,7 +154,29 @@ void MyCube::paintEvent(QPaintEvent *event)
   painter.setRenderHint(QPainter::Antialiasing,true);
   //画表面
   for(auto index:element_front_list){
-    painter.fillPath(element_path_list.at(index),Qt::green);
+      switch(index)
+      {
+          case 0:
+              painter.fillPath(element_path_list.at(index), Qt::green);
+              break;
+          case 1:
+              painter.fillPath(element_path_list.at(index), Qt::red);
+              break;
+          case 2:
+              painter.fillPath(element_path_list.at(index), Qt::blue);
+              break;
+          case 3:
+              painter.fillPath(element_path_list.at(index), Qt::darkYellow);
+              break;
+          case 4:
+              painter.fillPath(element_path_list.at(index), Qt::darkMagenta);
+              break;
+          case 5:
+              painter.fillPath(element_path_list.at(index), QColor(100, 100, 100, 255));
+              break;
+          default:
+          break;
+      }
   }
   //画被遮盖面的边框虚线
   painter.setPen(QPen(Qt::white,1,Qt::DashLine));
