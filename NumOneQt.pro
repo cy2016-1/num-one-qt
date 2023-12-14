@@ -1,6 +1,6 @@
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts websockets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets charts websockets opengl
 
 CONFIG += c++17
 
@@ -9,8 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Camera.cpp \
     MPU6050Display.cpp \
     MyCube.cpp \
+    PointCloudWidget.cpp \
+    PointsDrawWindow.cpp \
+    Scene.cpp \
+    Shader.cpp \
     SingleDataDisplay.cpp \
     WeSocketClient.cpp \
     interactiveacts.cpp \
@@ -18,10 +23,15 @@ SOURCES += \
     QtNumOne.cpp
 
 HEADERS += \
+    Camera.h \
     MPU6050Display.h \
     MainGUi.h \
     MyCube.h \
+    PointCloudWidget.h \
+    PointsDrawWindow.h \
     QtNumOne.h \
+    Scene.h \
+    Shader.h \
     SingleDataDisplay.h \
     WeSocketClient.h \
     interactiveacts.h

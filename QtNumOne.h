@@ -6,6 +6,7 @@
 #include "SingleDataDisplay.h"
 #include "MPU6050Display.h"
 #include "interactiveacts.h"
+#include "PointCloudWidget.h"
 
 class QtNumOne : public QMainWindow
 {
@@ -14,7 +15,6 @@ class QtNumOne : public QMainWindow
 public:
     MainGUi * aMainGui;
     QWidget * CurrentWgt = nullptr;
-    InteractiveActs * InteractiveWgt = nullptr;
 
     QtNumOne(QWidget *parent = nullptr);
     void LinkSignalSlot();

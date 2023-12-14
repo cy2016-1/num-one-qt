@@ -17,6 +17,13 @@
 #include "WeSocketClient.h"
 
 
+/*
+    通过keybd_event实现按键按下和释放操作
+    keybd_event('E', 0, KEYEVENTF_KEYDOWN ,0);
+    keybd_event('E', 0, KEYEVENTF_KEYUP ,0);
+*/
+
+
 #pragma comment  (lib, "User32.lib")
 
 class InteractiveActs:public QWidget

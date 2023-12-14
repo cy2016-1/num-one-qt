@@ -15,7 +15,7 @@ public:
     QMenu *BasicModuleMenu;
 
     //基础模块菜单下的Action
-    QAction *SingleData_Aisplay_Act, *MUP6050_Display_Act, * MUP6050_Interaction_Act;
+    QAction *SingleData_Aisplay_Act, *MUP6050_Display_Act, * MUP6050_Interaction_Act, * PointCloud_Display_Act;
 
     MainGUi(QMainWindow *MainWindow)
     {
@@ -41,6 +41,8 @@ public:
         MUP6050_Interaction_Act = new QAction("03_MPU6050交互控制CS1.6");
         BasicModuleMenu->addAction(MUP6050_Interaction_Act);
 
+        PointCloud_Display_Act  = new QAction("04_激光测距点云扫描显示");
+        BasicModuleMenu->addAction(PointCloud_Display_Act);
     }
 };
 

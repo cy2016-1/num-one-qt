@@ -25,10 +25,17 @@ void QtNumOne::LinkSignalSlot()
     });
     connect(aMainGui->MUP6050_Interaction_Act, &QAction::triggered, this, [=]()
     {//MPU6050控制电脑鼠标
-        if(InteractiveWgt!=nullptr)
-            delete InteractiveWgt;
-        InteractiveWgt = new InteractiveActs(nullptr);
-        this->setCentralWidget(InteractiveWgt);
+        if(CurrentWgt!=nullptr)
+            delete CurrentWgt;
+        CurrentWgt = new InteractiveActs(nullptr);
+        this->setCentralWidget(CurrentWgt);
+    });
+    connect(aMainGui->PointCloud_Display_Act, &QAction::triggered, this, [=]()
+    {//激光测距点云扫描显示
+        if(CurrentWgt!=nullptr)
+            delete CurrentWgt;
+        CurrentWgt = new PointCloudWidget(nullptr);
+        this->setCentralWidget(CurrentWgt);
     });
 }
 
