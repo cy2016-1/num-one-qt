@@ -29,7 +29,7 @@ public:
     float CameraPitch, CameraYaw;//欧拉角
     float CameraSpeed, MouseSensitivity, CameraZoom;//相机选项
     //采用向量来构造
-    Camera(vec3 Pos = vec3(0.0f, 1.0f, 3.0f), vec3 Up = vec3(0.0f, 1.0f, 0.0f), float Pitch = PITCH, float Yaw = YAW);
+    Camera(vec3 Pos = vec3(0.0f, 1.0f, 20.0f), vec3 Up = vec3(0.0f, 1.0f, 0.0f), float Pitch = PITCH, float Yaw = YAW);
     //通过分量参数进行构造
     Camera(float PosX, float PosY, float PosZ, float UpX, float UpY, float UpZ, float Pitch = PITCH, float Yaw = YAW);
     //获取ViewMatrix

@@ -36,7 +36,7 @@ void PointsDrawWindow::paintGL()
     m_shader->use();
 
 
-     projectionMat = perspective(radians(myCamera.CameraZoom), 1200.0f / 800.0f, 0.1f, 100.0f);
+     projectionMat = perspective(radians(myCamera.CameraZoom), 1200.0f / 800.0f, 0.1f, 1000.0f);
      m_shader->SetMat4("projectionMat", projectionMat);
 
      viewMat = myCamera.GetViewMatrix();
@@ -133,7 +133,7 @@ void PointsDrawWindow::ClearDatas()
 
 void PointsDrawWindow::PushBackPointColor(float x,float y,float z,float r,float g,float b)
 {
-    if(DatasVectors_n_6d.size()<10000)
+    if(DatasVectors_n_6d.size()<10000&&RecieveDataFlag)
     {
         QVector<float> PointColorData_6d;
         PointColorData_6d = {x,y,z,r,g,b};
@@ -141,7 +141,11 @@ void PointsDrawWindow::PushBackPointColor(float x,float y,float z,float r,float 
     }
     else
     {
-        QMessageBox::about(this, "提示", "最多允许10000个点的显示，如果想显示更多的点，请修改源码。");
+        if(RecieveDataFlag)
+        {
+            QMessageBox::about(this, "提示", "最多允许10000个点的显示，如果想显示更多的点，请修改源码。");
+            RecieveDataFlag = false;
+        }
     }
 }
 
@@ -192,7 +196,7 @@ void PointsDrawWindow::mouseMoveEvent(QMouseEvent * theEvent)
         MouseMoveY = theEvent->y();
         DeltaMouseX = MouseMoveX - MousePressX;
         DeltaMouseY = MousePressY - MouseMoveY;
-        myCamera.ProcessMouseMovement(-DeltaMouseX*0.6, -DeltaMouseY*0.6, true);
+        myCamera.ProcessMouseMovement(-DeltaMouseX, -DeltaMouseY, true);
     }
     else if (theEvent->buttons() == 4)
     {
@@ -201,13 +205,13 @@ void PointsDrawWindow::mouseMoveEvent(QMouseEvent * theEvent)
         MouseMoveY = theEvent->y();
         DeltaMouseY = MousePressY - MouseMoveY;
         if (DeltaMouseX > 0)
-            myCamera.ProcessKeyboard(RIGHT, DeltaMouseX*0.0001f);
+            myCamera.ProcessKeyboard(RIGHT, DeltaMouseX*0.001f);
         else
-            myCamera.ProcessKeyboard(LEFT, -DeltaMouseX * 0.0001f);
+            myCamera.ProcessKeyboard(LEFT, -DeltaMouseX * 0.001f);
         if (DeltaMouseY > 0)
-            myCamera.ProcessKeyboard(UP, DeltaMouseY*0.0001f);
+            myCamera.ProcessKeyboard(UP, DeltaMouseY*0.001f);
         else
-            myCamera.ProcessKeyboard(DOWN, -DeltaMouseY * 0.0001f);
+            myCamera.ProcessKeyboard(DOWN, -DeltaMouseY * 0.001f);
 
     }
 }

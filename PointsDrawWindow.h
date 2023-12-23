@@ -30,6 +30,7 @@ public:
     void PushBackPointColor(float x,float y,float z,float r,float g,float b);
     void SaveDatas();
 
+
 private:
     Shader* m_shader=nullptr;//渲染器
     Camera myCamera;//相机类
@@ -39,6 +40,7 @@ private:
     float deltatime;//单次运行时长
     QVector<QVector<float>> DatasVectors_n_6d;
     int ShowedPointNum = 0;
+    bool RecieveDataFlag = true;
 
     void initializeGL();//初始化Opengl
     void resizeGL(int w, int h);//当窗口大小改变时被调用的回调函数
